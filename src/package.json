@@ -1,0 +1,30 @@
+{
+  "name": "angular-meteor-universal",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "@angular/animations": "^5.0.0",
+    "@angular/common": "^5.0.0",
+    "@angular/compiler": "^5.0.0",
+    "@angular/core": "^5.0.0",
+    "@angular/forms": "^5.0.0",
+    "@angular/http": "^5.0.0",
+    "@angular/platform-browser": "^5.0.0",
+    "@angular/platform-browser-dynamic": "^5.0.0",
+    "@angular/platform-server": "^5.0.0",
+    "@angular/router": "^5.0.0",
+    "babel-runtime": "^6.20.0",
+    "meteor-node-stubs": "~0.3.0",
+    "meteor-rxjs": "^0.4.8",
+    "rxjs": "^5.5.0",
+    "zone.js": "^0.8.16"
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "5.1.0",
+    "@types/meteor": "1.4.12",
+    "@types/node": "8.0.57",
+    "typescript": "2.6.2"
+  }
+}
