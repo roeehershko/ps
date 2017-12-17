@@ -1,29 +1,35 @@
-FROM node
-ENV LANG en_US.UTF-8
+FROM ubuntu:latest
 
 WORKDIR /app
 EXPOSE 3000
 
-# RUN installs
+COPY ./src /app
+
+# Set enviroment
+ENV METEOR_ALLOW_SUPERUSER 1
+ENV MONGO_URL "mongodb://192.168.99.101:27017/ps"
+ENV DEPLOY_HOSTNAME "eu-west-1.galaxy-deploy.meteor.com"
+
+# Install CURL (Meteor Dep)
 RUN apt-get update && apt-get install -y curl
-RUN apt-get install locales
 
-RUN locale-gen "en_US.UTF-8"
-RUN dpkg-reconfigure locales
-ENV LANGUAGE en_US:en
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
-RUN echo LC_CTYPE="en_US.UTF-8" >> /etc/default/locale
-RUN echo LC_ALL="en_US.UTF-8" >> /etc/default/locale
-RUN echo LANG="en_US.UTF-8" >> /etc/default/locale
-RUN cat /etc/default/locale
+# Install Meteor
 RUN curl https://install.meteor.com/ | sh
-ENV  METEOR_ALLOW_SUPERUSER 1
-RUN npm install
 
+RUN apt-get install git -y
+
+# Prepare Project
+RUN meteor npm install
+RUN meteor update --all-packages
+RUN meteor add accounts-password
 CMD ["meteor"]
+# CMD ["meteor", "deploy", "--settings", "settings.json", "app.roeehershko.club"]
 
-# docker build -t mydoc2 .
+# docker build -t ps_app .
 # docker run -dt -it --rm -p 3000:3000 -v //c/Users/royh/Projects/tm/src:/app mydoc
 # bash -c "(docker exec -it tender_wiles bash || export \"TERM=xterm\")"
 # docker run -i -v //c/Users/royh/Projects/tm/src:/app mydoc2
+
+# docker run -p 3000:3000 -i -v //c/Users/royh/Projects/tm/src/client:/app/client -v //c/Users/royh/Projects/tm/src/server:/app/server -v //c/Users/royh/Projects/tm/src/imports:/app/imports --name ps_app ps_app
+
+# bash -c "(docker exec -it ps_app bash || export \"TERM=xterm\")";

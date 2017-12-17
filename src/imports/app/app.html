@@ -1,2 +1,17 @@
 <h1>Todos</h1>
 <router-outlet></router-outlet>
+<br>
+<br>
+<h3>Login</h3>
+Username <input type="text" [(ngModel)]="user.email"> <br>
+Password <input [(ngModel)]="user.password" type="password">
+<button (click)="loginUser()">Login</button>
+<br>
+<span *ngIf="currentUser">
+    User Is Logged <br>
+    Email: {{ currentUser.emails[0].address }}
+</span>
+<span *ngIf=" ! currentUser">User Is NOT Logged</span>
+
+<br><br>
+<button (click)="logoutUser()">Logout</button>

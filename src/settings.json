@@ -1,0 +1,7 @@
+{
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL": "mongodb://dukim:Abc1234@ds133496.mlab.com:33496/sandy"
+    }
+  }
+}
