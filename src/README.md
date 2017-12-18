@@ -1,28 +1,21 @@
-# Angular Meteor Universal w/ AOT
-This project shows the usage of *@angular/platform-server* and *@angular/compiler-cli* with *Meteor*
+Remember, an issue is not the place to ask questions. You can use [Stack Overflow](http://stackoverflow.com/questions/tagged/angular-meteor) for that, or you may want to start a discussion on the [Meteor forum](https://forums.meteor.com/).
 
- - Dynamic import without AOT is in dynamic-import branch
+Before you open an issue, please check if a similar issue already exists or has been closed before.
 
-How AOT works?
---
-- On both server and client, it loads AOT-compiled factories by using angular-compiler
+### When reporting a bug, please be sure to include the following:
+- [ ] A descriptive title
+- [ ] An *isolated* way to reproduce the behavior (example: GitHub repository with code isolated to the issue that anyone can clone to observe the problem)
+- [ ] What version of `angular-meteor` you're using, and the platform(s) you're running it on
+- [ ] What packages or other dependencies you're using
+- [ ] The behavior you expect to see, and the actual behavior
 
-How Universal works?
---
- -  renderModule(JIT) and renderModuleFactory(AOT) with Meteor's server-render
+See [here](https://github.com/meteor/meteor/blob/devel/Contributing.md#reporting-a-bug-in-meteor) for more detail on what is expected of a bug report.
 
-How-to
---
- - Add `server-render` package into your project
- - Move your Angular files into `imports/app`
- - Create `ServerAppModule` in `server-app.module.ts` w/ importing `ServerModule` from `@angular/platform-server` and `AppModule` from `app.module` in `imports/app` folder
- - Change `BrowserModule` in imports to `BrowserModule.withServerTransition({ appId: 'yourAppId' })`
- - Write server bootstrap code into `server/main.ts` like in this example
- - Run your project with command -> `AOT=1 meteor`
- - You have Angular Meteor Universal w/ AOT !!!
- - If you want to disable Universal in Development, you can do `Meteor.isProduction` check before `onPageLoad`
- - If you want to disable AOT compilation, you can run Meteor w/o `AOT=1`
+### When you open an issue for a feature request, please add as much detail as possible:
+- [ ] A descriptive title
+- [ ] A description of the problem you're trying to solve, including *why* you think this is a problem
+- [ ] An overview of the suggested solution
+- [ ] If the feature changes current behavior, reasons why your solution is better
 
-Known issues
---
-  - Ionic w/ Universal doesn't work due to this issue - https://github.com/ionic-team/ionic/issues/10699 - You can use Angular Material instead!
+See [here](https://github.com/meteor/meteor/blob/devel/Contributing.md#feature-requests) for more detail on what is expected of a feature request.
+

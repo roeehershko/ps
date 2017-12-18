@@ -17,9 +17,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
   todoListSubscription: Subscription;
   ngOnInit() {
     this.todos = Todos.find();
-    // Subscribe and connect it to Angular's change detection system
-    // while running on client
-      this.todoListSubscription = MeteorObservable.subscribe('todoList').subscribe();
+    this.todoListSubscription = MeteorObservable.subscribe('todoList').subscribe();
   }
   ngOnDestroy() {
     if (this.todoListSubscription)

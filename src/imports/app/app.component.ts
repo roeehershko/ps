@@ -1,24 +1,26 @@
 import {Component, OnInit, OnDestroy, NgZone} from '@angular/core';
-import {Router, NavigationEnd, ActivatedRoute} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {Accounts} from 'meteor/accounts-base'
 import {Subscription} from 'rxjs';
 import { MeteorObservable } from 'meteor-rxjs';
+import { Tracker } from 'meteor/tracker';
 
 @Component({
     selector: 'app',
     templateUrl: 'app.html'
 })
 export class AppComponent implements OnInit, OnDestroy {
-    //Dynamic title change along with router
-    private titleChangeSubscription: Subscription;
 
+    public autorunComputation: Tracker.Computation;
     public user = {
-        email: '',
-        password: ''
+        email: 'royh@affilomania.com',
+        password: '123456'
     };
 
-    public currentUser: Object;
+    currentUser: Meteor.User;
+    currentUserId: string;
+    isLoggingIn: boolean;
+    isLoggedIn: boolean;
 
     constructor(
                 private zone:NgZone,
@@ -26,45 +28,39 @@ export class AppComponent implements OnInit, OnDestroy {
                 private activatedRoute: ActivatedRoute,
                 private titleService: Title) {
 
-        this.currentUser = Meteor.user();
+        this._initAutorun();
     }
 
     ngOnInit() {
-
-        this.titleChangeSubscription =
-            this.router.events
-                .filter((event) => event instanceof NavigationEnd)
-                .map(() => this.activatedRoute)
-                .map((route) => {
-                    while (route.firstChild) route = route.firstChild;
-                    return route;
-                })
-                .filter((route) => route.outlet === 'primary')
-                .mergeMap((route) => route.data)
-                .subscribe((event) => this.titleService.setTitle(event['title']));
+        MeteorObservable.subscribe('userData').subscribe();
     }
 
     loginUser() {
-        let self = this
+        let self = this;
         Meteor.loginWithPassword(this.user.email, this.user.password, function () {
-            self.zone.run(() => {
-                console.log(Meteor.user());
-                self.currentUser = Meteor.user();
-            });
+            self.currentUser = Meteor.user();
         })
     }
 
     logoutUser() {
         let self = this
         Meteor.logout(function () {
-            self.zone.run(() => {
-                self.currentUser = Meteor.user();
-            });
-
+            self.currentUser = Meteor.user();
         });
     }
 
-    ngOnDestroy() {
-        this.titleChangeSubscription.unsubscribe();
+    forgotPass() {
     }
+    _initAutorun(): void {
+        this.autorunComputation = Tracker.autorun(() => {
+            this.zone.run(() => {
+                this.currentUser = Meteor.user();
+                this.currentUserId = Meteor.userId();
+                this.isLoggingIn = Meteor.loggingIn();
+                this.isLoggedIn = !!Meteor.user();
+            })
+        });
+    }
+
+    ngOnDestroy() {}
 }
