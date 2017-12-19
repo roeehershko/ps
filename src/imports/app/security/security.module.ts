@@ -12,6 +12,7 @@ import {SecurityComponent} from "./layout/security.layout";
 
 @NgModule({
     imports: [
+        FormsModule,
         RouterModule.forRoot([
             {
                 path: 'auth',

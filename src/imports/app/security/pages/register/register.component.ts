@@ -1,28 +1,38 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Observable, Subscription} from 'rxjs';
 
-import { Meteor } from 'meteor/meteor';
-import { MeteorObservable } from 'meteor-rxjs';
+import {Meteor} from 'meteor/meteor';
+import {Accounts} from 'meteor/accounts-base';
+import {MeteorObservable} from 'meteor-rxjs';
 
 
 @Component({
-  selector: 'register',
-  templateUrl: 'register.component.html',
-  styleUrls: ['register.scss']
+    selector: 'register',
+    templateUrl: 'register.component.html',
+    styleUrls: ['register.scss']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  public register: { email: string, password: string };
-  ngOnInit() {}
 
-  registerUser() {
-      let self = this;
-      // Meteor.registerWithPassword(this.register.email, this.register.password, function (err) {
-      //     console.log(err);
-      //     console.log(Meteor.user());
-      // })
-  }
+    public user: {
+        email: string,
+        password: string,
+        profile: {
+            name: string,
+            phone: string
+        }
+    };
+    ngOnInit() {
 
-  ngOnDestroy() {
+    }
 
-  }
+    registerUser() {
+        let self = this;
+        Accounts.createUser(this.user, function (err) {
+            console.log(err);
+        });
+    }
+
+    ngOnDestroy() {
+
+    }
 }
