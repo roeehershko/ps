@@ -48,9 +48,6 @@ export class AppComponent implements OnInit, OnDestroy {
             self.currentUser = Meteor.user();
         });
     }
-
-    forgotPass() {
-    }
     _initAutorun(): void {
         this.autorunComputation = Tracker.autorun(() => {
             this.zone.run(() => {

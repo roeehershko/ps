@@ -3,7 +3,7 @@ FROM ubuntu:latest
 WORKDIR /app
 EXPOSE 3000
 
-COPY ./src /app
+COPY ../src /app
 
 # Set enviroment
 ENV METEOR_ALLOW_SUPERUSER 1
@@ -22,7 +22,7 @@ RUN apt-get install git -y
 RUN meteor npm install
 RUN meteor update --all-packages
 RUN meteor add accounts-password
-CMD ["meteor"]
+CMD ["meteor", "deploy", "app.roeehershko.club","--settings", "settings.json"]
 # CMD ["meteor", "deploy", "--settings", "settings.json", "app.roeehershko.club"]
 
 # docker build -t ps_app .
